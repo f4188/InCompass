@@ -43,12 +43,12 @@ export default class ReportScreen extends React.Component {
           </View>
 
           <View style={styles.getStartedContainer}>
-
-            <Text style={styles.getStartedText}> Based on your genetic profile these genetic markers are most relevant to you goals </Text>
-
+            <Text style={styles.headerText}>REPORT SUGGESTIONS</Text>}
           </View>
 
-          <View>
+          <Text style={styles.getStartedText}> Based on your genetic profile these genetic markers are most relevant to you goals </Text>
+         
+          <View style={styles.itemList}>
             <FlatList
               data={this.state.list}
               renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
@@ -57,7 +57,7 @@ export default class ReportScreen extends React.Component {
 
           <View style={styles.helpContainer}>
             <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}> Get Recipe Suggestions </Text>
+              <Text style={styles.helpLinkText}>GET RECIPE SUGGESTIONS</Text>
             </TouchableOpacity>
           </View>
 
@@ -79,44 +79,60 @@ const styles = StyleSheet.create({
     justifyContent : 'space-around'
   },
   welcomeContainer: {
-    alignItems: 'center',
+    alignItems: 'flex-start',
     marginTop: 10,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   welcomeImage: {
     width: 100,
     height: 80,
     resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10,
+    marginTop: 0,
+    marginLeft: 20,
+  },
+  headerText : {
+    fontSize : 25,
+    color: '#fff',
+    lineHeight: 30,
+    textAlign: 'center',
+    marginBottom: 10,
+    marginTop: 10,
+    paddingVertical: 10
+
   },
   getStartedContainer: {
+    backgroundColor: "#267587",
     alignItems: 'center',
-    marginHorizontal: 50,
+    marginHorizontal: 0,
   },
   getStartedText: {
-    fontSize: 17,
+    fontSize: 18,
     color: 'rgba(96,100,109, 1)',
     lineHeight: 24,
     textAlign: 'center',
+    marginTop: 50,
   },
   navigationFilename: {
     marginTop: 5,
   },
   helpContainer: {
-    marginTop: 15,
+    marginTop: 25,
     alignItems: 'center',
   },
   helpLink: {
     paddingVertical: 15,
   },
   helpLinkText: {
-    fontSize: 14,
-    color: 'rgba(96,100,109, 1)'
+    marginTop: 30,
+    fontSize: 16,
+    color: '#db0068'
+  },
+  itemList : {
+    marginTop: 30,
   },
   item: {
     lineHeight: 20,
-    paddingLeft: 40,
+    paddingLeft: 60,
     padding: 10,
     color: 'rgba(96,100,109, 1)',
     fontSize: 15,
