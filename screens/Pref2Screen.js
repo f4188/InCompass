@@ -44,7 +44,7 @@ export default class Pref2Screen extends React.Component {
               style={styles.welcomeImage}
           />
 
-        <Text style={styles.getStartedText}>Which foods do you not prefer?</Text>
+        <Text style={styles.foodPrefText}>WHICH FOODS DO YOU DISLIKE?</Text>
         </View>
         <View style={styles.paddingTop} contentContainerStyle={styles.contentContainer}>
         <SectionedMultiSelect
@@ -67,8 +67,6 @@ export default class Pref2Screen extends React.Component {
 
 }
 
-
-
 const items = [
   {  
     name: "Fruits",
@@ -78,53 +76,65 @@ const items = [
         id: 10,
       },{
         name: "Strawberry",
-        id: 17,
+        id: 11,
       },{
         name: "Pineapple",
-        id: 13,
+        id: 12,
       },{
         name: "Banana",
-        id: 14,
+        id: 13,
       },{
         name: "Watermelon",
-        id: 15,
+        id: 14,
       },{
         name: "Kiwi fruit",
+        id: 15,
+      },{
+        name: "Tomato",
         id: 16,
       }]
   },
   {
-    name: "Gems",
+    name: "Proteins",
     id: 1,
     children: [{
-        name: "Quartz",
+        name: "Chicken",
         id: 20,
       },{
-        name: "Zircon",
+        name: "Fish",
         id: 21,
       },{
-        name: "Sapphire",
+        name: "Beef",
         id: 22,
       },{
-        name: "Topaz",
+        name: "Pork",
         id: 23,
+      },{
+        name: "Tofu",
+        id: 24,
       }]
   },
   {
-    name: "Plants",
+    name: "Vegetables",
     id: 2,
     children: [{
-        name: "Mother In Law\'s Tongue",
+        name: "Spinach",
         id: 30,
       },{
-        name: "Yucca",
+        name: "Onion",
         id: 31,
       },{
-        name: "Monsteria",
+        name: "Kale",
         id: 32,
       },{
-        name: "Palm",
+        name: "Broccoli",
         id: 33,
+      },{
+        name: "Beets",
+        id: 34,
+      },{
+        name: "Carrots",
+        id: 35,
       }]
   },
 ]
@@ -137,13 +147,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-
   contentContainerCenter: {
     alignItems: 'center',
   },
-
   contentContainer: {
-    marginTop: 30
+    marginTop: 30,
+    fontSize: 17,
   },
   welcomeContainer: {
     alignItems: 'center',
@@ -179,5 +188,13 @@ const styles = StyleSheet.create({
   helpLinkText: {
     fontSize: 14,
     color: '#2e78b7',
+  },
+  foodPrefText : {
+    fontSize : 25,
+    color: 'rgba(96,100,109, 1)',
+    lineHeight: 30,
+    textAlign: 'center',
+    marginBottom: 50,
+    marginTop: 30,
   },
 });
