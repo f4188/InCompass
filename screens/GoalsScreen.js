@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  TouchableHighlight
 } from 'react-native';
 import { WebBrowser } from 'expo';
 
@@ -37,14 +38,16 @@ export default class GoalsScreen extends React.Component {
           <View style={styles.getStartedContainer}>
             <View style={styles.iconColums}>
              <Text style={styles.getStartedText}>Weight Loss</Text>
-              <Image
-                source={
-                  __DEV__
-                    ? require('../assets/images/weight_loss.png')
-                    : require('../assets/images/weight_loss.png')
-                }
-                style={styles.iconImage}
-              />
+              <TouchableHighlight onPress={()=>{this.props.navigation.navigate('Pref1Screen')}}>
+                <Image
+                  source={
+                    __DEV__
+                      ? require('../assets/images/weight_loss.png')
+                      : require('../assets/images/weight_loss.png')
+                  }
+                  style={styles.iconImage}
+                />
+              </TouchableHighlight> 
             </View>
 
              <View style={styles.iconColums}>

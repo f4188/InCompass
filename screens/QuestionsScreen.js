@@ -7,10 +7,11 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Switch
+  Switch,
+  Button
 } from 'react-native';
 import { WebBrowser } from 'expo';
-
+import { DocumentPicker } from 'expo';
 import { MonoText } from '../components/StyledText';
 
 export default class QuestionsScreen extends React.Component {
@@ -25,6 +26,23 @@ export default class QuestionsScreen extends React.Component {
       },
     }
   }
+
+
+  _openPicker = async () => {
+    const result = await DocumentPicker.getDocumentAsync({});
+    if (result.type === 'success') {
+      this.setState({ document: result });
+    } else {
+      
+    }
+  };
+
+  _renderDocument() {
+    if (this.state.document === null) {
+      return null;
+    }
+  }
+
   static navigationOptions = {
     header: null
   };
@@ -78,6 +96,13 @@ export default class QuestionsScreen extends React.Component {
             <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
             </TouchableOpacity>
           </View>
+
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Button onPress={this._openPicker} title="Open document picker" />
+        {this._renderDocument()}
+      </View>
+
+          <Button title="Next" onPress={()=>{this.props.navigation.navigate('GoalsScreen')}}/>
         </ScrollView>
       </View>
     );

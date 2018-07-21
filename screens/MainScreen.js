@@ -35,7 +35,7 @@ export default class MainScreen extends React.Component {
 
           <View style={styles.getStartedContainer}>
 
-            <Text style={styles.getStartedText}>WELCOME.</Text>
+            <Text style={styles.getStartedText}>WELCOME</Text>
 
 
           </View>

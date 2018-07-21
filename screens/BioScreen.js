@@ -122,7 +122,7 @@ export default class BioScreen extends React.Component {
       </View>
 
 
-      <Button title="Submit" onPress={()=>{}}/>
+      <Button title="Submit" onPress={()=>{this.props.navigation.navigate('GoalsScreen')}}/>
 
       </View>
 
