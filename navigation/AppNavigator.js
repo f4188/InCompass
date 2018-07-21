@@ -5,12 +5,12 @@ import { createSwitchNavigator, createStackNavigator } from 'react-navigation';
 
 import MainScreen from '../screens/MainScreen'
 import BioScreen from '../screens/BioScreen'
-import GoalScreen from '../screens/GoalScreen'
+import GoalsScreen from '../screens/GoalsScreen'
 import UploadScreen from '../screens/UploadScreen'
 import Pref1Screen from '../screens/Pref1Screen'
 import Pref2Screen from '../screens/Pref2Screen'
 import SuggestScreen from '../screens/SuggestScreen'
- 
+import QuestionsScreen from '../screens/QuestionsScreen'
 //export default createSwitchNavigator({
   // You could add another route here for authentication.
   // Read more at https://reactnavigation.org/docs/en/auth-flow.html
@@ -18,11 +18,12 @@ import SuggestScreen from '../screens/SuggestScreen'
 //});
 
 export default createStackNavigator({
-	Main : { screen : MainScreen },
-	BioScreen : { screen : BioScreen },
-	GoalScreen : { screen : GoalScreen },
-	UploadScreen : { screen : UploadScreen },
+	GoalsScreen : { screen : GoalsScreen},
+	QuestionsScreen : { screen : QuestionsScreen},
 	Pref1Screen : { screen : Pref1Screen },
+	Main : { screen : MainScreen },
 	Pref2Screen : { screen : Pref2Screen },
+	BioScreen : { screen : BioScreen },
+	UploadScreen : { screen : UploadScreen },
 	SuggestScreen : { screen : SuggestScreen }
 })

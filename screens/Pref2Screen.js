@@ -1,4 +1,5 @@
 import React from 'react';
+import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import {
   Image,
   Platform,
@@ -7,12 +8,24 @@ import {
   Text,
   TouchableOpacity,
   View,
+  FlatList  
 } from 'react-native';
 import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
 
 export default class Pref2Screen extends React.Component {
+
+  constructor(){
+    super()
+    this.state = {
+      selectedItems: [],
+    }
+  }
+  onSelectedItemsChange = (selectedItems) => {
+    this.setState({ selectedItems });
+  }
+
   static navigationOptions = {
     header: null,
   };
@@ -20,29 +33,33 @@ export default class Pref2Screen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.welcomeContainer}>
-            <Image
+        <ScrollView style={styles.container}>
+          <View contentContainerStyle={styles.contentContainerCenter}>
+          <Image
               source={
                 __DEV__
-                  ? require('../assets/images/robot-dev.png')
-                  : require('../assets/images/robot-prod.png')
+                  ? require('../assets/images/compass.png')
+                  : require('../assets/images/compass.png')
               }
               style={styles.welcomeImage}
-            />
-          </View>
+          />
 
-          <View style={styles.getStartedContainer}>
+        <Text style={styles.getStartedText}>Which foods do you not prefer?</Text>
+        </View>
+        <View style={styles.paddingTop} contentContainerStyle={styles.contentContainer}>
+        <SectionedMultiSelect
+          items={items} 
+          color="primary"
+          uniqueKey='id'
+          subKey='children'
+          selectText='Click to select..'
+          showDropDowns={true}
+          readOnlyHeadings={true}
+          onSelectedItemsChange={this.onSelectedItemsChange}
+          selectedItems={this.state.selectedItems}
+        />
+      </View>
 
-            <Text style={styles.getStartedText}>Get started by opening</Text>
-
-          </View>
-
-          <View style={styles.helpContainer}>
-            <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-            </TouchableOpacity>
-          </View>
         </ScrollView>
 
       </View>
@@ -51,26 +68,94 @@ export default class Pref2Screen extends React.Component {
 
 }
 
+
+
+const items = [
+  {  
+    name: "Fruits",
+    id: 0,
+    children: [{
+        name: "Apple",
+        id: 10,
+      },{
+        name: "Strawberry",
+        id: 17,
+      },{
+        name: "Pineapple",
+        id: 13,
+      },{
+        name: "Banana",
+        id: 14,
+      },{
+        name: "Watermelon",
+        id: 15,
+      },{
+        name: "Kiwi fruit",
+        id: 16,
+      }]
+  },
+  {
+    name: "Gems",
+    id: 1,
+    children: [{
+        name: "Quartz",
+        id: 20,
+      },{
+        name: "Zircon",
+        id: 21,
+      },{
+        name: "Sapphire",
+        id: 22,
+      },{
+        name: "Topaz",
+        id: 23,
+      }]
+  },
+  {
+    name: "Plants",
+    id: 2,
+    children: [{
+        name: "Mother In Law\'s Tongue",
+        id: 30,
+      },{
+        name: "Yucca",
+        id: 31,
+      },{
+        name: "Monsteria",
+        id: 32,
+      },{
+        name: "Palm",
+        id: 33,
+      }]
+  },
+]
+
 const styles = StyleSheet.create({
+  paddingTop: {
+    paddingTop: 50
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
   },
 
+  contentContainerCenter: {
+    alignItems: 'center',
+  },
+
   contentContainer: {
-    paddingTop: 30,
+    marginTop: 30
   },
   welcomeContainer: {
     alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
+    marginTop: 10
   },
   welcomeImage: {
     width: 100,
     height: 80,
     resizeMode: 'contain',
     marginTop: 3,
-    marginLeft: -10,
+    marginLeft: 20,
   },
   getStartedContainer: {
     alignItems: 'center',
