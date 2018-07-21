@@ -25,8 +25,8 @@ export default class SuggestScreen extends React.Component {
             <Image
               source={
                 __DEV__
-                  ? require('../assets/images/robot-dev.png')
-                  : require('../assets/images/robot-prod.png')
+                  ? require('../assets/images/compass.png')
+                  : require('../assets/images/compass.png')
               }
               style={styles.welcomeImage}
             />
@@ -34,15 +34,10 @@ export default class SuggestScreen extends React.Component {
 
           <View style={styles.getStartedContainer}>
 
-            <Text style={styles.getStartedText}>Get started by opening</Text>
+            <Text style={styles.getStartedText}>To achieve your goals we recommend these recipes</Text>
 
           </View>
 
-          <View style={styles.helpContainer}>
-            <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-            </TouchableOpacity>
-          </View>
         </ScrollView>
 
       </View>
