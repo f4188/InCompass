@@ -35,23 +35,37 @@ export default class MainScreen extends React.Component {
 
           <View style={styles.getStartedContainer}>
 
-            <Text style={styles.getStartedText}>InCompass</Text>
+            <Text style={styles.getStartedText}>WELCOME.</Text>
+
 
           </View>
 
+
+
           <View style={styles.helpContainer}>
-            <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}>We navigate you to better health results</Text>
-            </TouchableOpacity>
+          
+              <Text style={styles.bodyText}>Are you ready for a personalized path to wellness?</Text>
+          
+          </View>
+
+          <View style={styles.arrowContainer}>
+            <Image
+              source={
+                __DEV__
+                  ? require('../assets/images/arrow_squished.png')
+                  : require('../assets/images/arrow_squished.png')
+              }
+              style={styles.arrowImage}
+            />
           </View>
 
           <View style={styles.textContainer}>
             <Button
-               onPress={buildProfile}
-                title="Get Started"
+               onPress={()=>{this.props.navigation.navigate('BioScreen')}}
+                title="Let's Get Started"
                 color="#555"
-                paddingTop="200"
-                fontSize="24"
+                paddingTop="50"
+                fontSize="20"
                 accessibilityLabel="Learn more about this purple button"
             />
           </View>  
@@ -64,7 +78,7 @@ export default class MainScreen extends React.Component {
 }
 
 const buildProfile = ()=> {
-  alert("hi");
+  //this.props
 };
 
 const styles = StyleSheet.create({
@@ -74,48 +88,66 @@ const styles = StyleSheet.create({
   },
 
   textContainer: {
-    paddingTop: 100
+    paddingTop: 50,
   },
 
   contentContainer: {
     paddingTop: 30,
   },
+
   welcomeContainer: {
     alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
+    marginTop: 5,
+
   },
   welcomeImage: {
     width: 350,
     height: 200,
     resizeMode: 'contain',
-    marginTop: 3,
+    marginTop: 0,
     marginLeft: -10,
   },
-  getStartedContainer: {
+  arrowContainer: {
+    marginTop: -100,
     alignItems: 'center',
-    marginHorizontal: 50,
+  },
+  arrowImage: {
+    marginTop: 0,
+    width: 120,
+    height: 150,
+    alignItems: 'center',
+  },
+  bodyText: {
+    fontSize: 17,
+    color: '#fff',
+  },
+  getStartedContainer: {
+    backgroundColor: '#267587',
+    alignItems: 'center',
+
   },
   getStartedText: {
-    fontSize: 28,
-    color: 'rgba(96,100,109, 1)',
-    lineHeight: 24,
+    fontSize: 50,
+    color: '#fff',
+    lineHeight: 50,
     textAlign: 'center',
-    marginTop: 10,
-    paddingTop: 10
+    marginTop: 5,
+    paddingTop: 40,
   },
   navigationFilename: {
     marginTop: 5,
   },
   helpContainer: {
-    marginTop: 15,
+    backgroundColor: '#267587',
+    marginTop: 0,
     alignItems: 'center',
+    paddingVertical: 50,
   },
   helpLink: {
     paddingVertical: 15,
   },
   helpLinkText: {
-    fontSize: 14,
-    color: '#2e78b7',
+    fontSize: 16,
+    color: '#fff',
   },
 });
