@@ -11,6 +11,9 @@ import Pref1Screen from '../screens/Pref1Screen'
 import Pref2Screen from '../screens/Pref2Screen'
 import SuggestScreen from '../screens/SuggestScreen'
 import QuestionsScreen from '../screens/QuestionsScreen'
+import Test from '../screens/Test'
+ 
+
 //export default createSwitchNavigator({
   // You could add another route here for authentication.
   // Read more at https://reactnavigation.org/docs/en/auth-flow.html
@@ -20,10 +23,12 @@ import QuestionsScreen from '../screens/QuestionsScreen'
 export default createStackNavigator({
 	GoalsScreen : { screen : GoalsScreen},
 	QuestionsScreen : { screen : QuestionsScreen},
-	Pref1Screen : { screen : Pref1Screen },
 	Main : { screen : MainScreen },
 	Pref2Screen : { screen : Pref2Screen },
+	Test : { screen : Test },
+	MainScreen : { screen : MainScreen },
 	BioScreen : { screen : BioScreen },
 	UploadScreen : { screen : UploadScreen },
 	SuggestScreen : { screen : SuggestScreen }
+	Pref1Screen : { screen : Pref1Screen },
 })
