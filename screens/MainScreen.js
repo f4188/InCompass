@@ -11,6 +11,7 @@ import {
 import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
+import { Button } from 'react-native';
 
 export default class MainScreen extends React.Component {
   static navigationOptions = {
@@ -25,8 +26,8 @@ export default class MainScreen extends React.Component {
             <Image
               source={
                 __DEV__
-                  ? require('../assets/images/robot-dev.png')
-                  : require('../assets/images/robot-prod.png')
+                  ? require('../assets/images/compass.png')
+                  : require('../assets/images/compass.png')
               }
               style={styles.welcomeImage}
             />
@@ -34,15 +35,26 @@ export default class MainScreen extends React.Component {
 
           <View style={styles.getStartedContainer}>
 
-            <Text style={styles.getStartedText}>Get started by opening</Text>
+            <Text style={styles.getStartedText}>InCompass</Text>
 
           </View>
 
           <View style={styles.helpContainer}>
             <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
+              <Text style={styles.helpLinkText}>We navigate you to better health results</Text>
             </TouchableOpacity>
           </View>
+
+          <View style={styles.textContainer}>
+            <Button
+               onPress={buildProfile}
+                title="Get Started"
+                color="#555"
+                paddingTop="200"
+                fontSize="24"
+                accessibilityLabel="Learn more about this purple button"
+            />
+          </View>  
         </ScrollView>
 
       </View>
@@ -51,10 +63,18 @@ export default class MainScreen extends React.Component {
 
 }
 
+const buildProfile = ()=> {
+  alert("hi");
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+
+  textContainer: {
+    paddingTop: 100
   },
 
   contentContainer: {
@@ -66,8 +86,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   welcomeImage: {
-    width: 100,
-    height: 80,
+    width: 350,
+    height: 200,
     resizeMode: 'contain',
     marginTop: 3,
     marginLeft: -10,
@@ -77,10 +97,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 50,
   },
   getStartedText: {
-    fontSize: 17,
+    fontSize: 28,
     color: 'rgba(96,100,109, 1)',
     lineHeight: 24,
     textAlign: 'center',
+    marginTop: 10,
+    paddingTop: 10
   },
   navigationFilename: {
     marginTop: 5,
