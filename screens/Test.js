@@ -30,6 +30,8 @@ export default class MainScreen extends React.Component {
 
         <Button title="SuggestScreen" onPress={()=>{this.props.navigation.navigate('SuggestScreen')}} />
         <Button title="Pref1Screen" onPress={()=>{this.props.navigation.navigate('Pref1Screen')}} />
+        <Button title="ReportScreen" onPress={()=>{this.props.navigation.navigate('ReportScreen')}} />
+
 
       </View>
     );

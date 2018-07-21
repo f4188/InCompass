@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  FlatList
 } from 'react-native';
 import { WebBrowser } from 'expo';
 
@@ -17,6 +18,15 @@ export default class ReportScreen extends React.Component {
     header: null,
   };
 
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      list : [ { key : 'Low Fat Diet Affectiveness'}, { key : 'Low Carb Diet Affectiveness' } , { key : 'Low Protein Intake Risk' } , { key : 'Mediterranean Diet Affectiveness' } ]
+    }
+
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -25,8 +35,8 @@ export default class ReportScreen extends React.Component {
             <Image
               source={
                 __DEV__
-                  ? require('../assets/images/robot-dev.png')
-                  : require('../assets/images/robot-prod.png')
+                  ? require('../assets/images/compass.png')
+                  : require('../assets/images/compass.png')
               }
               style={styles.welcomeImage}
             />
@@ -34,19 +44,27 @@ export default class ReportScreen extends React.Component {
 
           <View style={styles.getStartedContainer}>
 
-            <Text style={styles.getStartedText}>Get started by opening</Text>
+            <Text style={styles.getStartedText}> Based on your genetic profile these genetic markers are most relevant to you goals </Text>
 
+          </View>
+
+          <View>
+            <FlatList
+              data={this.state.list}
+              renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
+            />
           </View>
 
           <View style={styles.helpContainer}>
             <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
+              <Text style={styles.helpLinkText}> Get Recipe Suggestions </Text>
             </TouchableOpacity>
           </View>
+
         </ScrollView>
 
       </View>
-    );
+    )
   }
 
 }
@@ -54,11 +72,11 @@ export default class ReportScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff'
   },
-
   contentContainer: {
     paddingTop: 30,
+    justifyContent : 'space-around'
   },
   welcomeContainer: {
     alignItems: 'center',
@@ -94,6 +112,14 @@ const styles = StyleSheet.create({
   },
   helpLinkText: {
     fontSize: 14,
-    color: '#2e78b7',
+    color: 'rgba(96,100,109, 1)'
   },
+  item: {
+    lineHeight: 20,
+    paddingLeft: 40,
+    padding: 10,
+    color: 'rgba(96,100,109, 1)',
+    fontSize: 15,
+    height: 44
+  }
 });

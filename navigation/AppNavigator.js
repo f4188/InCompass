@@ -12,6 +12,7 @@ import Pref2Screen from '../screens/Pref2Screen'
 import SuggestScreen from '../screens/SuggestScreen'
 import QuestionsScreen from '../screens/QuestionsScreen'
 import Test from '../screens/Test'
+import ReportScreen from '../screens/ReportScreen'
  
 
 //export default createSwitchNavigator({
@@ -23,6 +24,7 @@ import Test from '../screens/Test'
 export default createStackNavigator({
 	Test : { screen : Test },
 	Main : { screen : MainScreen },
+	ReportScreen : { screen : ReportScreen },
 	GoalsScreen : { screen : GoalsScreen},
 	QuestionsScreen : { screen : QuestionsScreen},
 	Pref2Screen : { screen : Pref2Screen },

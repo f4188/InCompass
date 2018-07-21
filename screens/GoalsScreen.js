@@ -135,11 +135,7 @@ export default class GoalsScreen extends React.Component {
               style={styles.iconImage}
             />
             </View>
-<<<<<<< HEAD
 
-=======
-            
->>>>>>> refs/remotes/origin/master
           </View>
 
         </ScrollView>
