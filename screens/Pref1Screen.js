@@ -8,7 +8,8 @@ import {
   Text,
   TouchableOpacity,
   View,
-  FlatList  
+  FlatList,
+  Button  
 } from 'react-native';
 import { WebBrowser } from 'expo';
 
@@ -60,6 +61,7 @@ export default class Pref1Screen extends React.Component {
         />
       </View>
 
+        <Button title="Submit" onPress={()=>{this.props.navigation.navigate('Pref2Screen')}}/>
         </ScrollView>
 
       </View>

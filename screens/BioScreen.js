@@ -40,28 +40,37 @@ export default class BioScreen extends React.Component {
 
     return (
       <View style={styles.container}>
+      <View contentContainerStyle={styles.contentContainerCenter}>
+          <Image
+              source={
+                __DEV__
+                  ? require('../assets/images/compass.png')
+                  : require('../assets/images/compass.png')
+              }
+              style={styles.welcomeImage}
+          />
+          </View>
 
-      <View style={styles.form}>
-      
       <Text style={styles.instruct}>
-        Input biographic info
+        BIOGRAPHICAL INFO
       </Text>
 
+      <View style={styles.form}>
+
+
       <View style={styles.formField, styles.formFieldRow}>
-        <Text style={styles.formFieldText}>
-          Height
+        <Text style={styles.formFieldText}>Height:
         </Text>
         <TextInput
           style={styles.formFieldTextInput}
-          placeholder="Enter height here"
+          placeholder="Enter height"
           onChangeText={(text) => this.setState({text})}
           value={this.state.text}
         />
       </View>
 
       <View style={styles.formField, styles.formFieldRow}>
-        <Text style={styles.formFieldText}>
-          Age
+        <Text style={styles.formFieldText}>Age:
         </Text>
         <TextInput
           style={styles.formFieldTextInput}
@@ -71,14 +80,25 @@ export default class BioScreen extends React.Component {
         />
       </View>
 
-      <View style={styles.formField}>
-       <Text style={styles.formFieldText}>
-        Activity
-       </Text>
-       
+      <View style={styles.formField, styles.formFieldRow}>
+        <Text style={styles.formFieldText}>
+          Current weight:
+        </Text>
+        <TextInput
+          style={styles.formFieldTextInput}
+          placeholder="Enter weight"
+          onChangeText={(weight) => this.setState({weight})}
+          value={this.state.weight}
+        />
+      </View>
+
+
+      <View style={styles.pickerColumns}>
+       <Text style={styles.pickerFieldText}>Activity Level:</Text>       
        <Picker
+
         selectedValue={this.state.activity}
-        style={{ height: 50, width: 100 }}
+        style={{ height: 50, width: 100, }}
         onValueChange={(itemValue, itemIndex) => this.setState({activity: itemValue})}>
         <Picker.Item label="Sedentary" value="Sedentary" />
         <Picker.Item label="Normal" value="Normal" />
@@ -87,9 +107,9 @@ export default class BioScreen extends React.Component {
       </Picker>
       </View>
 
-       <View style={styles.formField}>
-       <Text style={styles.formFieldText}>
-        Biological Sex
+       <View style={styles.pickerColumns}>
+       <Text style={styles.pickerFieldText}>
+        Biological Sex:
        </Text>
        
        <Picker
@@ -101,18 +121,8 @@ export default class BioScreen extends React.Component {
       </Picker>
       </View>
 
-      <View style={styles.formField, styles.formFieldRow}>
-        <Text style={styles.formFieldText}>
-          Current weight
-        </Text>
-        <TextInput
-          style={styles.formFieldTextInput}
-          onChangeText={(weight) => this.setState({weight})}
-          value={this.state.weight}
-        />
-      </View>
 
-      <Button title="Submit" onPress={()=>{}}/>
+      <Button title="Submit" onPress={()=>{this.props.navigation.navigate('GoalsScreen')}}/>
 
       </View>
 
@@ -123,39 +133,58 @@ export default class BioScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+   welcomeImage: {
+    width: 100,
+    height: 80,
+    resizeMode: 'contain',
+    marginTop: 0,
+    marginLeft: 20,
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingTop:24
+    paddingTop:24,
   },
   instruct : {
-    fontSize : 16
+    fontSize : 25,
+    color: 'rgba(96,100,109, 1)',
+    lineHeight: 30,
+    textAlign: 'center',
+    marginBottom: 50,
+    marginTop: 30,
+  },
+  pickerColumns : {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   form : {
+    marginLeft: 50,
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'space-evenly'
+    alignItems: 'flex-start',
+    justifyContent: 'space-evenly',
+    width: 300,
   },
   formFieldRow : {
     flexDirection : 'row',
     alignItems : 'center',
-    padding : 10
+    padding : 12,
   },
   formField : {
-    padding : 15
+    padding : 15,
   },
   formFieldText : {
-    fontSize : 15,
-    marginRight : 10
+    fontSize : 17,
+    marginRight : 30,
+    marginLeft : 20,
   },
   formFieldTextInput : {
+    color: "#267587",
+    fontSize: 14,
     height: 40, 
-    borderColor: 'gray', 
-    borderWidth: 0,
-    width: 60
+    borderBottomWidth : 1,
+    borderBottomColor: 'rgba(38, 117, 135, .3)',
+    width: 120,
+    padding: 5,
   },
-  picker : { 
-    height: 50, 
-    width: 100 
-  }
 });

@@ -8,10 +8,10 @@ import {
   Text,
   TouchableOpacity,
   View,
-  FlatList  
+  FlatList,
+  Button
 } from 'react-native';
 import { WebBrowser } from 'expo';
-
 import { MonoText } from '../components/StyledText';
 
 export default class Pref2Screen extends React.Component {
@@ -59,9 +59,8 @@ export default class Pref2Screen extends React.Component {
           selectedItems={this.state.selectedItems}
         />
       </View>
-
+        <Button title="Submit" onPress={()=>{this.props.navigation.navigate('QuestionsScreen')}}/>
         </ScrollView>
-
       </View>
     );
   }

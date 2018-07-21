@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  TouchableHighlight
 } from 'react-native';
 import { WebBrowser } from 'expo';
 
@@ -64,9 +65,25 @@ export default class GoalsScreen extends React.Component {
           />
           </View>
 
+          <Text style={styles.headerText}>WHAT IS YOUR MAIN HEALTH GOAL?</Text>
+
           <View style={styles.getStartedContainer}>
-             <View>
-             <Text style={styles.getStartedText}>Atletic Training</Text>
+            <View style={styles.iconColums}>
+             <Text style={styles.getStartedText}>Weight Loss</Text>
+              <TouchableHighlight onPress={()=>{this.props.navigation.navigate('Pref1Screen')}}>
+                <Image
+                  source={
+                    __DEV__
+                      ? require('../assets/images/weight_loss.png')
+                      : require('../assets/images/weight_loss.png')
+                  }
+                  style={styles.iconImage}
+                />
+              </TouchableHighlight> 
+            </View>
+
+             <View style={styles.iconColums}>
+             <Text style={styles.getStartedText}>Athletic Training</Text>
             <Image
               source={
                 __DEV__
@@ -76,30 +93,14 @@ export default class GoalsScreen extends React.Component {
               style={styles.iconImage}
             />
             </View>
-            <View>
-             <Text style={styles.getStartedText}>Basic</Text>
-            <Image
-              source={
-                __DEV__
-                  ? require('../assets/images/basic.png')
-                  : require('../assets/images/basic.png')
-              }
-              style={styles.iconImage}
-            />
-            </View>
-            <View>
-             <Text style={styles.getStartedText}>Weight Loss</Text>
-            <Image
-              source={
-                __DEV__
-                  ? require('../assets/images/weight_loss.png')
-                  : require('../assets/images/weight_loss.png')
-              }
-              style={styles.iconImage}
-            />
-            </View>
-            <View>
-             <Text style={styles.getStartedText}>Lean Fit</Text>
+            
+          
+          </View>
+
+           <View style={styles.getStartedContainer}>
+
+            <View style={styles.iconColums}>
+             <Text style={styles.getStartedText}>Lean & Fit</Text>
             <Image
               source={
                 __DEV__
@@ -109,7 +110,7 @@ export default class GoalsScreen extends React.Component {
               style={styles.iconImage}
             />
             </View>
-            <View>
+            <View style={styles.iconColums}>
              <Text style={styles.getStartedText}>Longevity</Text>
             <Image
               source={
@@ -120,8 +121,27 @@ export default class GoalsScreen extends React.Component {
               style={styles.iconImage}
             />
             </View>
-
           </View>
+
+           <View style={styles.getStartedContainer}>
+            <View style={styles.iconColums}>
+             <Text style={styles.getStartedText}>Basic</Text>
+            <Image
+              source={
+                __DEV__
+                  ? require('../assets/images/basic.png')
+                  : require('../assets/images/basic.png')
+              }
+              style={styles.iconImage}
+            />
+            </View>
+<<<<<<< HEAD
+
+=======
+            
+>>>>>>> refs/remotes/origin/master
+          </View>
+
         </ScrollView>
 
       </View>
@@ -131,21 +151,19 @@ export default class GoalsScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  leftContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-  },
-  rightContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-  },
+  
   container: {
     flex: 1,
     backgroundColor: '#fff',
   },
-
+  headerText: {
+    fontSize: 25,
+    color: 'rgba(96,100,109, 1)',
+    lineHeight: 30,
+    textAlign: 'center',
+    marginBottom: 50,
+    marginTop: 30,
+  },
   contentContainer: {
     paddingTop: 30,
   },
@@ -161,22 +179,28 @@ const styles = StyleSheet.create({
     marginTop: 0,
     marginLeft: 20,
   },
-  iconImage: {
-    width: 300,
-    height: 200,
-    resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10,
+  iconColums: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   getStartedContainer: {
+    marginTop: 20,
+    flex: 1,
+    flexDirection: 'row',
     alignItems: 'center',
-    marginHorizontal: 50,
   },
   getStartedText: {
     fontSize: 17,
     color: 'rgba(96,100,109, 1)',
-    lineHeight: 24,
+    lineHeight: 20,
     textAlign: 'center',
+  },
+  iconImage: {
+    marginTop: -20,
+    width: 150,
+    height: 200,
+    resizeMode: 'contain',
   },
   navigationFilename: {
     marginTop: 5,
