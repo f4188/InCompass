@@ -1,10 +1,27 @@
 import React from 'react';
-import { createSwitchNavigator } from 'react-navigation';
+import { createSwitchNavigator, createStackNavigator } from 'react-navigation';
 
 import MainTabNavigator from './MainTabNavigator';
 
-export default createSwitchNavigator({
+import MainScreen from '../screens/MainScreen'
+import BioScreen from '../screens/BioScreen'
+import GoalScreen from '../screens/GoalScreen'
+import UploadScreen from '../screens/Pref1Screen'
+import Pref2Screen from '../screens/Pref2Screen'
+import SuggestScreen from '../screens/SuggestScreen'
+ 
+//export default createSwitchNavigator({
   // You could add another route here for authentication.
   // Read more at https://reactnavigation.org/docs/en/auth-flow.html
-  Main: MainTabNavigator,
-});
+  //Main: MainTabNavigator,
+//});
+
+export default createStackNavigator({
+	Main : { screen : MainScreen },
+	BioScreen : { screen : BioScreen },
+	GoalScreen : { screen : GoalScreen },
+	UploadScreen : { screen : UploadScreen },
+	Pref1Screen : { screen : Pref1Screen },
+	Pref2Screen : { screen : Pref2Screen },
+	SuggestScreen : { screen : SuggestScreen }
+})
