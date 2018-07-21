@@ -17,6 +17,38 @@ export default class GoalsScreen extends React.Component {
     header: null,
   };
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      goals: {
+          one: true,
+          two: true,
+          three: true,
+          four: true
+      }
+    }
+  }
+
+  toggleState = (one) => {
+    if(one === "one") {
+      this.setState((prevState, props) => {
+        return {goals: {one: !this.state.goals.one, two: this.state.goals.two, three: this.state.goals.three, four: this.state.goals.four}};
+      });
+    } else if(one === "two") {
+      this.setState((prevState, props) => {
+        return {goals: {one: this.state.goals.one, two: !this.state.goals.two, three: this.state.goals.three, four: this.state.goals.four}};
+      });
+    } else if(one === "three") {
+      this.setState((prevState, props) => {
+        return {goals: {one: this.state.goals.one, two: this.state.goals.two, three: !this.state.goals.three, four: this.state.goals.four}};
+      });
+    } else if(one === "four") {
+        this.setState((prevState, props) => {
+          return {goals: {one: this.state.goals.one, two: this.state.goals.two, three: this.state.goals.three, four: !this.state.goals.four}};
+        });
+    }
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -88,6 +120,7 @@ export default class GoalsScreen extends React.Component {
               style={styles.iconImage}
             />
             </View>
+
           </View>
         </ScrollView>
 

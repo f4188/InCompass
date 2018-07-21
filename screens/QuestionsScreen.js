@@ -14,41 +14,16 @@ import { WebBrowser } from 'expo';
 import { MonoText } from '../components/StyledText';
 
 export default class QuestionsScreen extends React.Component {
-    constructor(){
-    super()
+    constructor(props){
+    super(props)
     this.state = {
-      goals: {
-          one: true,
-          two: true,
-          three: true,
-          four: true
-      },
+      wearable : false,
+      fitnessApp : false
     }
   }
   static navigationOptions = {
     header: null
   };
-
-  toggleState = (one) => {
-    if(one === "one") {
-      this.setState((prevState, props) => {
-        return {goals: {one: !this.state.goals.one, two: this.state.goals.two, three: this.state.goals.three, four: this.state.goals.four}};
-      });
-    } else if(one === "two") {
-      this.setState((prevState, props) => {
-        return {goals: {one: this.state.goals.one, two: !this.state.goals.two, three: this.state.goals.three, four: this.state.goals.four}};
-      });
-    } else if(one === "three") {
-      this.setState((prevState, props) => {
-        return {goals: {one: this.state.goals.one, two: this.state.goals.two, three: !this.state.goals.three, four: this.state.goals.four}};
-      });
-    } else if(one === "four") {
-        this.setState((prevState, props) => {
-          return {goals: {one: this.state.goals.one, two: this.state.goals.two, three: this.state.goals.three, four: !this.state.goals.four}};
-        });
-    }
-  };
-
 
   render() {
     return (
@@ -66,12 +41,21 @@ export default class QuestionsScreen extends React.Component {
           </View>
 
           <View style={styles.getStartedContainer}>
-            <Text style={styles.getStartedText}>Have you taken a Genetic Test?</Text>
-            <Switch style={styles.switch} onTintColor="green" value={this.state.goals.one} onValueChange={()=> {this.toggleState("one")}}> </Switch>
+            <TouchableOpacity onPress={()=>{}}>
+            <Text style={styles.getStartedText}>Get Started with Silverberry</Text>
+            </TouchableOpacity>
+          </View>
+
+
+          <View>
             <Text style={styles.getStartedText}> Do you own any wearable? </Text>
-            <Switch style={styles.switch}  onTintColor="green" value={this.state.goals.two} onValueChange={()=> {this.toggleState("two")}}> </Switch>
+            <Switch style={styles.switch}  onTintColor="green" value={this.state.wearable} onValueChange={()=> {this.state.wearable = true}}> </Switch>
+            { this.state.wearable ? ( <Button title="connect fitbit" />) : null }
+          </View>
+
+          <View>
             <Text style={styles.getStartedText}> Do you use a fitness app? </Text>
-            <Switch style={styles.switch}  onTintColor="green" value={this.state.goals.three} onValueChange={()=> {this.toggleState("three")}}> </Switch>
+            <Switch style={styles.switch}  onTintColor="green" value={this.state.fitnessApp} onValueChange={()=> {this.state.fitnessApp = true}}> </Switch>
           </View>
 
           <View style={styles.helpContainer}>
