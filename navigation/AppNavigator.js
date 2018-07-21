@@ -10,6 +10,7 @@ import UploadScreen from '../screens/UploadScreen'
 import Pref1Screen from '../screens/Pref1Screen'
 import Pref2Screen from '../screens/Pref2Screen'
 import SuggestScreen from '../screens/SuggestScreen'
+import Test from '../screens/Test'
  
 //export default createSwitchNavigator({
   // You could add another route here for authentication.
@@ -18,11 +19,12 @@ import SuggestScreen from '../screens/SuggestScreen'
 //});
 
 export default createStackNavigator({
-	Main : { screen : MainScreen },
+	Test : { screen : Test },
+	MainScreen : { screen : MainScreen },
 	BioScreen : { screen : BioScreen },
 	GoalScreen : { screen : GoalScreen },
 	UploadScreen : { screen : UploadScreen },
 	Pref1Screen : { screen : Pref1Screen },
 	Pref2Screen : { screen : Pref2Screen },
-	SuggestScreen : { screen : SuggestScreen }
+	SuggestScreen : { screen : SuggestScreen },
 })

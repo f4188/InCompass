@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Picker,
 } from 'react-native';
 import { WebBrowser } from 'expo';
 
@@ -17,33 +18,57 @@ export default class BioScreen extends React.Component {
     header: null,
   };
 
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      activity: "Sedentary"
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.welcomeContainer}>
-            <Image
-              source={
-                __DEV__
-                  ? require('../assets/images/robot-dev.png')
-                  : require('../assets/images/robot-prod.png')
-              }
-              style={styles.welcomeImage}
-            />
-          </View>
 
-          <View style={styles.getStartedContainer}>
+      <View style={styles.form}>
+      <View>
+        <Text>
+          Height
+        </Text>
 
-            <Text style={styles.getStartedText}>Get started by opening</Text>
+      </View>
 
-          </View>
+      <View>
+       <Text>
+        Activity
+       </Text>
+       
+       <Picker
+        selectedValue={this.state.language}
+        style={{ height: 50, width: 100 }}
+        onValueChange={(itemValue, itemIndex) => this.setState({activity: itemValue})}>
+        <Picker.Item label="Sedentary" value="Sedentary" />
+        <Picker.Item label="Normal" value="Normal" />
+        <Picker.Item label="Active" value="Active" />
+        <Picker.Item label="Olympiam" value="Olympian" />
+      </Picker>
+      </View>
 
-          <View style={styles.helpContainer}>
-            <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
+       <View>
+       <Text>
+        Biological Sex
+       </Text>
+       
+       <Picker
+        selectedValue={this.state.language}
+        style={{ height: 50, width: 100 }}
+        onValueChange={(itemValue, itemIndex) => this.setState({activity: itemValue})}>
+        <Picker.Item label="Male" value="Male" />
+        <Picker.Item label="Female" value="Female" />
+      </Picker>
+      </View>
+
+      </View>
 
       </View>
     );
@@ -55,45 +80,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    paddingTop:24
   },
-
-  contentContainer: {
-    paddingTop: 30,
-  },
-  welcomeContainer: {
+  form : {
+    flex: 1,
     alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10,
-  },
-  getStartedContainer: {
-    alignItems: 'center',
-    marginHorizontal: 50,
-  },
-  getStartedText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    lineHeight: 24,
-    textAlign: 'center',
-  },
-  navigationFilename: {
-    marginTop: 5,
-  },
-  helpContainer: {
-    marginTop: 15,
-    alignItems: 'center',
-  },
-  helpLink: {
-    paddingVertical: 15,
-  },
-  helpLinkText: {
-    fontSize: 14,
-    color: '#2e78b7',
+    justifyContent: 'center'
   },
 });
