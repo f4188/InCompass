@@ -22,7 +22,7 @@ export default class ReportScreen extends React.Component {
     super(props)
 
     this.state = {
-      list : [ { key : 'Low Fat Diet Affectiveness'}, { key : 'Low Carb Diet Affectiveness' } , { key : 'Low Protein Intake Risk' } , { key : 'Mediterranean Diet Affectiveness' } ]
+      list : [{key : 'Low Fat Diet Affectiveness'}, { key : 'Low Carb Diet Affectiveness' } , { key : 'Low Protein Intake Risk' } , { key : 'Mediterranean Diet Affectiveness' } ]
     }
 
   }
