@@ -21,11 +21,11 @@ import Test from '../screens/Test'
 //});
 
 export default createStackNavigator({
+	Test : { screen : Test },
 	Main : { screen : MainScreen },
 	GoalsScreen : { screen : GoalsScreen},
 	QuestionsScreen : { screen : QuestionsScreen},
 	Pref2Screen : { screen : Pref2Screen },
-	Test : { screen : Test },
 	MainScreen : { screen : MainScreen },
 	BioScreen : { screen : BioScreen },
 	UploadScreen : { screen : UploadScreen },
