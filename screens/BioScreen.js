@@ -8,10 +8,13 @@ import {
   TouchableOpacity,
   View,
   Picker,
+  TextInput
 } from 'react-native';
 import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
+import { TextField } from 'react-native-material-textfield'
+
 
 export default class BioScreen extends React.Component {
   static navigationOptions = {
@@ -22,23 +25,51 @@ export default class BioScreen extends React.Component {
     super(props)
 
     this.state = {
-      activity: "Sedentary"
+      activity: "Sedentary",
+      text: "",
+      age: "",
+      sex: ""
     }
   }
 
   render() {
+
+    const { activity } = this.state
+
     return (
       <View style={styles.container}>
 
       <View style={styles.form}>
-      <View>
+      <TextField
+        label='Something'
+        value={activity}
+        onChangeText={ ()=>{} }
+      />
+
+      <View style={styles.formField, styles.formFieldRow}>
         <Text>
           Height
         </Text>
-
+        <TextInput
+          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+          placeholder="Enter height here"
+          onChangeText={(text) => this.setState({text})}
+          value={this.state.text}
+        />
       </View>
 
-      <View>
+      <View style={styles.formField, styles.formFieldRow}>
+        <Text>
+          Age
+        </Text>
+        <TextInput
+          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+          onChangeText={(age) => this.setState({age})}
+          value={this.state.text}
+        />
+      </View>
+
+      <View style={styles.formField}>
        <Text>
         Activity
        </Text>
@@ -50,11 +81,11 @@ export default class BioScreen extends React.Component {
         <Picker.Item label="Sedentary" value="Sedentary" />
         <Picker.Item label="Normal" value="Normal" />
         <Picker.Item label="Active" value="Active" />
-        <Picker.Item label="Olympiam" value="Olympian" />
+        <Picker.Item label="Olympian" value="Olympian" />
       </Picker>
       </View>
 
-       <View>
+       <View style={styles.formField}>
        <Text>
         Biological Sex
        </Text>
@@ -87,4 +118,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
+  formFieldRow : {
+    flexDirection : 'row',
+  },
+  formField : {
+    padding : 15
+  }
 });
