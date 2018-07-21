@@ -1,12 +1,13 @@
 import React from 'react';
 import { createSwitchNavigator, createStackNavigator } from 'react-navigation';
 
-import MainTabNavigator from './MainTabNavigator';
+//import MainTabNavigator from './MainTabNavigator';
 
 import MainScreen from '../screens/MainScreen'
 import BioScreen from '../screens/BioScreen'
 import GoalScreen from '../screens/GoalScreen'
-import UploadScreen from '../screens/Pref1Screen'
+import UploadScreen from '../screens/UploadScreen'
+import Pref1Screen from '../screens/Pref1Screen'
 import Pref2Screen from '../screens/Pref2Screen'
 import SuggestScreen from '../screens/SuggestScreen'
  
