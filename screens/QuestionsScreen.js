@@ -57,21 +57,22 @@ export default class QuestionsScreen extends React.Component {
               style={styles.welcomeImage}
           />
           </View>
+          <Text style={styles.headerText}>FITNESS DEVICES</Text>
 
           <View style={styles.getStartedContainer}>
             <TouchableOpacity onPress={()=>{}}>
-            <Text style={styles.getStartedText}>Get Started with Silverberry</Text>
+            <Text style={styles.silverText}>Get Started with Silverberry</Text>
             </TouchableOpacity>
           </View>
 
 
-          <View>
+          <View style={styles.switchQuestions}>
             <Text style={styles.getStartedText}> Do you own any wearable? </Text>
             <Switch style={styles.switch}  onTintColor="green" value={this.state.wearable} onValueChange={()=> {this.state.wearable = true}}> </Switch>
             { this.state.wearable ? ( <Button title="connect fitbit" />) : null }
           </View>
 
-          <View>
+          <View style={styles.switchQuestions}>
             <Text style={styles.getStartedText}> Do you use a fitness app? </Text>
             <Switch style={styles.switch}  onTintColor="green" value={this.state.fitnessApp} onValueChange={()=> {this.state.fitnessApp = true}}> </Switch>
           </View>
@@ -86,7 +87,7 @@ export default class QuestionsScreen extends React.Component {
         {this._renderDocument()}
       </View>
 
-          <Button title="Next" onPress={()=>{this.props.navigation.navigate('GoalsScreen')}}/>
+          <Button title="Next" onPress={()=>{this.props.navigation.navigate('ReportScreen')}}/>
         </ScrollView>
       </View>
     );
@@ -107,7 +108,22 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-
+  headerText: {
+    fontSize: 25,
+    color: 'rgba(96,100,109, 1)',
+    lineHeight: 30,
+    textAlign: 'center',
+    marginBottom: 50,
+    marginTop: 10,
+  },
+  silverText: {
+    marginBottom: 40,
+    fontSize: 17,
+    color: '#db0068',
+  },
+  switchQuestions: {
+    marginLeft: 50,
+  },
   contentContainer: {
     paddingTop: 30,
   },
@@ -124,7 +140,6 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   getStartedContainer: {
-    alignItems: 'center',
     marginHorizontal: 50,
   },
   getStartedText: {
