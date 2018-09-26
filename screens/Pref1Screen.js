@@ -7,200 +7,232 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  TouchableNativeFeedback,
   View,
   FlatList,
-  Button  
+  Button,
+  Switch,
+  TouchableWithoutFeedback,
+  ActivityIndicator,
+  Dimensions,
+  LayoutAnimation
 } from 'react-native';
 import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
 
+const Touchable = Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity
+
+const items = require('../items.json')
+
+const defaultColors = {
+  primary: '#3f51b5',
+  success: '#4caf50',
+  cancel: '#1A1A1A',
+  text: '#2e2e2e',
+  subText: '#848787',
+  selectToggleTextColor: '#333',
+  searchPlaceholderTextColor: '#999',
+  searchSelectionColor: 'rgba(0,0,0,0.2)',
+  chipColor: '#848787',
+  itemBackground: '#fff',
+  subItemBackground: '#ffffff',
+  disabled: '#d7d7d7',
+}
+
+const tintColor = '#174A87'
+
+
+const Toggle = props => (
+  <TouchableWithoutFeedback onPress={() => props.onPress(!props.val)} disabled={props.disabled}>
+    <View style={styles.switch}>
+      <Text style={styles.label}>{props.name}</Text>
+      <Switch onTintColor={tintColor} onValueChange={v => props.onPress(v)} value={props.val} />
+    </View>
+  </TouchableWithoutFeedback>
+)
+
 export default class Pref1Screen extends React.Component {
 
-  constructor(){
-    super()
+  static defaultProps = {
+    itemFontFamily: { fontFamily: Platform.OS === 'android' ? 'normal' : 'Avenir', fontWeight: 'bold' },
+    subItemFontFamily: { fontFamily: Platform.OS === 'android' ? 'normal' : 'Avenir', fontWeight: '200' },
+    searchTextFontFamily: { fontFamily: Platform.OS === 'android' ? 'normal' : 'Avenir', fontWeight: '200' },
+    confirmFontFamily: { fontFamily: Platform.OS === 'android' ? 'normal' : 'Avenir', fontWeight: 'bold' },
+    confirmText: "Choose"
+  }
+
+  constructor(props){
+    super(props)
     this.state = {
       selectedItems: [],
+      selectedItems2 : []
     }
   }
-  onSelectedItemsChange = (selectedItems) => {
+  _onSelectedItemsChange = (selectedItems) => {
     this.setState({ selectedItems });
   }
 
-  static navigationOptions = {
-    header: null,
-  };
+  _onSelectedItemsChange2 = () => {}
 
-  render() {
+  _renderMultiSelect = () => {
     return (
-      <View style={styles.container}>
-        <ScrollView style={styles.container}>
-          <View contentContainerStyle={styles.contentContainerCenter}>
-          <Image
-              source={
-                __DEV__
-                  ? require('../assets/images/compass.png')
-                  : require('../assets/images/compass.png')
-              }
-              style={styles.welcomeImage}
-          />
-
-        <Text style={styles.foodPrefText}>WHICH FOODS DO YOU PREFER?</Text>
-        </View>
-        <View style={styles.paddingTop} contentContainerStyle={styles.contentContainer}>
-        <SectionedMultiSelect
-          items={items} 
+      <SectionedMultiSelect
+          items={items}
           color="primary"
           uniqueKey='id'
           subKey='children'
           selectText='Click to select..'
           showDropDowns={true}
           readOnlyHeadings={true}
-          onSelectedItemsChange={this.onSelectedItemsChange}
+          onSelectedItemsChange={this._onSelectedItemsChange}
           selectedItems={this.state.selectedItems}
+          onToggleSelector={this._onToggleSelector}
+          onSelectedItemObjectsChange={this.onSelectedItemObjectsChange}
+          onCancel={this._onCancel}
+          onConfirm={this._onConfirm}
+
+          styles={{
+            
+            chipText: {
+               maxWidth: Dimensions.get('screen').width - 90,
+            },
+            itemText: {
+              color: this.state.selectedItems2.length ? 'black' : 'lightgrey'
+            },
+            subItemText: {
+              color: this.state.selectedItems2.length ? 'black' : 'lightgrey'
+            },
+           }}
         />
+    )
+  }
+
+  render() {
+    
+    const {
+      confirmText,
+      searchTextFontFamily,
+      confirmFontFamily
+    } = this.props
+
+    const confirmFont = confirmFontFamily.fontFamily && confirmFontFamily
+
+    return (
+      <View styles={styles.mainContainer}>
+
+        <View style={styles.content}>
+
+          <ScrollView style={{ flex: 1 }}>
+            {this._renderMultiSelect()}
+            {this._renderMultiSelect()}
+          </ScrollView>
+
+          <View style={styles.border} />
+
+          <View style={styles.options}>
+            <Toggle name="Single" onPress={this._onSingleToggle} val={this.state.single} />
+          </View>
+        </View> 
+
+        <View style={styles.footer}>
+        <Touchable accessibilityComponentType="button" onPress={this._submitSelection}>
+          <View
+            style={[{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: 50,
+             
+              paddingVertical: 8,
+              
+              borderRadius: 0,
+              backgroundColor: defaultColors.primary,
+            },
+            styles.button,
+            ]}
+          >
+            <Text style={[{ fontSize: 18, color: '#ffffff' }, confirmFont, styles.confirmText]}>
+              {confirmText}
+            </Text>
+          </View>
+        </Touchable> 
+        </View>
+
+
+    
       </View>
 
-        <Button title="Submit" onPress={()=>{this.props.navigation.navigate('Pref2Screen')}}/>
-        </ScrollView>
-
-      </View>
     );
   }
 
+  _submitSelection() {}
+
+  _onSingleToggle() {}
+
+  _onSelectedItemsChange2() {}
+  _onSelectedItemObjectsChange() {}
+  _onCancel() {}
+  _onConfirm() {}
+  _onToggleSelector() {}
+
 }
 
-
-
-const items = [
-  {  
-    name: "Fruits",
-    id: 0,
-    children: [{
-        name: "Apple",
-        id: 10,
-      },{
-        name: "Strawberry",
-        id: 11,
-      },{
-        name: "Pineapple",
-        id: 12,
-      },{
-        name: "Banana",
-        id: 13,
-      },{
-        name: "Watermelon",
-        id: 14,
-      },{
-        name: "Kiwi fruit",
-        id: 15,
-      },{
-        name: "Tomato",
-        id: 16,
-      }]
-  },
-  {
-    name: "Proteins",
-    id: 1,
-    children: [{
-        name: "Chicken",
-        id: 20,
-      },{
-        name: "Fish",
-        id: 21,
-      },{
-        name: "Beef",
-        id: 22,
-      },{
-        name: "Pork",
-        id: 23,
-      },{
-        name: "Tofu",
-        id: 24,
-      }]
-  },
-  {
-    name: "Vegetables",
-    id: 2,
-    children: [{
-        name: "Spinach",
-        id: 30,
-      },{
-        name: "Onion",
-        id: 31,
-      },{
-        name: "Kale",
-        id: 32,
-      },{
-        name: "Broccoli",
-        id: 33,
-      },{
-        name: "Beets",
-        id: 34,
-      },{
-        name: "Carrots",
-        id: 35,
-      }]
-  },
-]
-
 const styles = StyleSheet.create({
-  paddingTop: {
-    paddingTop: 50
-  },
-  container: {
+  mainContainer: {
     flex: 1,
-    backgroundColor: '#fff',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  content: {
+    backgroundColor: 'white',
+    //borderWidth: 2,
+    height: Dimensions.get('screen').height-(30+40),
+    flexDirection: 'column',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+    
+    //margin: 20
+
+  },
+  footer: {
+    flex: 0,
+    height: 50,
+    //borderWidth: 2
+  },
+  header: {
+    flex: 0,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 20,
+
+  },
+  options: {
+    //borderWidth: 2,
+    flex: 0,
+    height: 40,
+    marginVertical: 10,
+  },
+  border: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#dadada',
+    marginBottom: 20,
+  },
+  heading: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 5,
+    marginTop: 20,
+  },
+  confirmText: {},
+  switch: {
+    marginBottom: 20,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'space-between',
   },
 
-  contentContainerCenter: {
-    alignItems: 'center',
-  },
-
-  contentContainer: {
-    marginTop: 30
-  },
-  welcomeContainer: {
-    alignItems: 'center',
-    marginTop: 10
-  },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: 20,
-  },
-  getStartedContainer: {
-    alignItems: 'center',
-    marginHorizontal: 50,
-  },
-  getStartedText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    lineHeight: 24,
-    textAlign: 'center',
-  },
-  navigationFilename: {
-    marginTop: 5,
-  },
-  helpContainer: {
-    marginTop: 15,
-    alignItems: 'center',
-  },
-  helpLink: {
-    paddingVertical: 15,
-  },
-  helpLinkText: {
-    fontSize: 14,
-    color: '#2e78b7',
-  },
-  foodPrefText : {
-    fontSize : 25,
-    color: 'rgba(96,100,109, 1)',
-    lineHeight: 30,
-    textAlign: 'center',
-    marginBottom: 50,
-    marginTop: 30,
-  },
+  button: {}
 });

@@ -21,15 +21,12 @@ export default class MainScreen extends React.Component {
       <View style={styles.container} >
 
         <Button title="Main" onPress={()=>{this.props.navigation.navigate('MainScreen')}} />
-        <Button title="Bio" onPress={()=>{this.props.navigation.navigate('BioScreen')}} />
-        <Button title="GoalsScreen" onPress={()=>{this.props.navigation.navigate('GoalsScreen')}} />
-        <Button title="QuestionsScreen" onPress={()=>{this.props.navigation.navigate('QuestionsScreen')}} />
+        <Button title="Pref1Screen" onPress={()=>{this.props.navigation.navigate('Pref1Screen')}} />
         <Button title="Pref2Screen" onPress={()=>{this.props.navigation.navigate('Pref2Screen')}} />
 
         <Button title="UploadScreen" onPress={()=>{this.props.navigation.navigate('UploadScreen')}} />
 
         <Button title="SuggestScreen" onPress={()=>{this.props.navigation.navigate('SuggestScreen')}} />
-        <Button title="Pref1Screen" onPress={()=>{this.props.navigation.navigate('Pref1Screen')}} />
         <Button title="ReportScreen" onPress={()=>{this.props.navigation.navigate('ReportScreen')}} />
 
 
