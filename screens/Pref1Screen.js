@@ -17,6 +17,8 @@ import {
   Dimensions,
   LayoutAnimation
 } from 'react-native';
+
+import { Divider, Subheading, Appbar } from 'react-native-paper'
 import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
@@ -65,8 +67,9 @@ export default class Pref1Screen extends React.Component {
   constructor(props){
     super(props)
     this.state = {
+      fruits_veggies: [],
       selectedItems: [],
-      selectedItems2 : []
+      selectedItems2 : [],
     }
   }
   _onSelectedItemsChange = (selectedItems) => {
@@ -75,16 +78,20 @@ export default class Pref1Screen extends React.Component {
 
   _onSelectedItemsChange2 = () => {}
 
-  _renderMultiSelect = () => {
+  _renderMultiSelect = (title, items) => {
+    
     return (
+      <View style={{ paddingVertical: 10, padding: 5 }}>
+      
       <SectionedMultiSelect
           items={items}
           color="primary"
           uniqueKey='id'
           subKey='children'
-          selectText='Click to select..'
+          selectText={`${title}...`}
           showDropDowns={true}
           readOnlyHeadings={true}
+
           onSelectedItemsChange={this._onSelectedItemsChange}
           selectedItems={this.state.selectedItems}
           onToggleSelector={this._onToggleSelector}
@@ -103,8 +110,13 @@ export default class Pref1Screen extends React.Component {
             subItemText: {
               color: this.state.selectedItems2.length ? 'black' : 'lightgrey'
             },
+            //container: {
+            //  backgroundColor: 'lightgrey'
+            //}
+
            }}
         />
+        </View>
     )
   }
 
@@ -124,43 +136,52 @@ export default class Pref1Screen extends React.Component {
         <View style={styles.content}>
 
           <ScrollView style={{ flex: 1 }}>
-            {this._renderMultiSelect()}
-            {this._renderMultiSelect()}
-          </ScrollView>
 
-          <View style={styles.border} />
+            {this._renderMultiSelect('Baking and Grains', items)}
+
+            <Divider />
+
+            {this._renderMultiSelect('Fruit, Vegetables, Nuts and Legumes', [items[1], items[2], items[13]])}
+
+            <Divider />
+
+            {this._renderMultiSelect('Meat, Fish and Seafood', items)}
+
+            <Divider />
+
+            {this._renderMultiSelect('Dairy and Dairy Substitutes',items)}
+
+            <Divider />
+
+            {this._renderMultiSelect('Spices, Seasonings and Oils', items)}
+
+            <Divider />
+
+            {this._renderMultiSelect('Sweeteners, Deserts and Snacks', items)}
+
+            <Divider />
+
+            {this._renderMultiSelect('Condiments', items)}
+
+            <Divider />
+
+            {this._renderMultiSelect('Sauces and Soups', items)}
+
+            <Divider />
+
+
+            {this._renderMultiSelect('Beverages and Alcohol', items)}
+
+            <Divider />
+
+          </ScrollView>
+   
 
           <View style={styles.options}>
             <Toggle name="Single" onPress={this._onSingleToggle} val={this.state.single} />
           </View>
+
         </View> 
-
-        <View style={styles.footer}>
-        <Touchable accessibilityComponentType="button" onPress={this._submitSelection}>
-          <View
-            style={[{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'center',
-              height: 50,
-             
-              paddingVertical: 8,
-              
-              borderRadius: 0,
-              backgroundColor: defaultColors.primary,
-            },
-            styles.button,
-            ]}
-          >
-            <Text style={[{ fontSize: 18, color: '#ffffff' }, confirmFont, styles.confirmText]}>
-              {confirmText}
-            </Text>
-          </View>
-        </Touchable> 
-        </View>
-
-
-    
       </View>
 
     );
@@ -183,30 +204,20 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-around',
-    alignItems: 'center',
+    alignItems: 'stretch',
   },
   content: {
+    flex: 0,
+    flexDirection: 'column',
     backgroundColor: 'white',
     //borderWidth: 2,
     height: Dimensions.get('screen').height-(30+40),
     flexDirection: 'column',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingVertical: 20,
+    alignItems: 'stretch',
+   // paddingHorizontal: 20,
+    paddingVertical: 10,
     
     //margin: 20
-
-  },
-  footer: {
-    flex: 0,
-    height: 50,
-    //borderWidth: 2
-  },
-  header: {
-    flex: 0,
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 20,
 
   },
   options: {
@@ -214,11 +225,6 @@ const styles = StyleSheet.create({
     flex: 0,
     height: 40,
     marginVertical: 10,
-  },
-  border: {
-    borderBottomWidth: 1,
-    borderBottomColor: '#dadada',
-    marginBottom: 20,
   },
   heading: {
     fontSize: 24,
@@ -232,7 +238,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent: 'space-between',
-  },
-
-  button: {}
+  }
 });

@@ -72,25 +72,27 @@ export default createStackNavigator(
 
 export default class MainScreen extends React.Component {
   
-  /*static navigationOptions = {
-    header: null,
-  };*/
+  static navigationOptions = ({ navigation }) => ({
+      header: (
+        <Appbar.Header>
+          <Appbar.Action icon="menu" onPress={() => navigation.openDrawer()} />
+          
+        </Appbar.Header>
+      )
+  })
 
   constructor(props) {
+
     super(props)
-
-   // this._onPressPref1 = this._onPressPref1.bind(this)
-   // this._onPressPref2 = this._onPressPref2.bind(this)
-   // this._onPressNutProfile = this._onPressNutProfile.bind(this)
-  //  this._onPressFind = this._onPressFind.bind(this)
-
     this._onPressSurfaceButton = this._onPressSurfaceButton.bind(this)
+
   }
 
   static defaultProps = {
 
       confirmFontFamily: { fontFamily: Platform.OS === 'android' ? 'normal' : 'Avenir', fontWeight: 'bold' },
       confirmText: "Choose"
+      
   }
 
   _onPressSurfaceButton(screen) {
@@ -122,6 +124,15 @@ export default class MainScreen extends React.Component {
     )
   }
 
+  _renderButton3(buttonTitle, screen, color, iconName) {
+    return (
+      <TouchableOpacity style={[styles.touchableButton, { backgroundColor: color || 'grey'}]} onPress={()=> this._onPressSurfaceButton(screen)}>
+        <Icon name={iconName} size={50} />
+        <Text> {buttonTitle} </Text>
+      </TouchableOpacity>
+    )
+  }
+
   render() {
 
     //const { confirmText } = this.props
@@ -133,25 +144,28 @@ export default class MainScreen extends React.Component {
         <View style={styles.content}>
 
           <View style={{ flex: 1, flexDirection: 'row' }}>
-          {this._renderButton2('Include Ingredients', 'Pref1Screen')}
+          {this._renderButton3('Include Ingredients', 'Pref1Screen', '#27ae60', 'local-grocery-store')}
 
-          {this._renderButton2('Exclude Ingredients', 'Pref2Screen')}
+          {this._renderButton3('Exclude Ingredients', 'Pref2Screen', '#c0392b', 'local-grocery-store')}
           </View>
 
           <View style={{ flex: 1, flexDirection: 'row' }}>
-          {this._renderButton2('Nutritional Profile', 'ReportScreen')}
+          {this._renderButton3('Macronutrients', 'ReportScreen', 'lightgrey', 'multiline-chart')}
 
-          {this._renderButton2()}
+          {this._renderButton3('Micronutrients')}
           </View>
 
           <View style={{ flex: 1, flexDirection: 'row' }}>
-          {this._renderButton2('Find Recipes', 'SuggestScreen')}
+          {this._renderButton3('Silverberry')}
+          {this._renderButton3('Find Recipes', 'SuggestScreen', 'lightgrey', 'restaurant')}
           </View>
 
         </View>
        
       </View>
     );
+
+
   }
 
 }
@@ -165,7 +179,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+  //marginHorizontal: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 50,
   },
   screenButtonColumn : { 
     flex: 1, 
@@ -197,8 +214,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 40,
     backgroundColor: '#4F80E1',
- //   marginBottom: 20,
- shadowColor: '#000',
+ // marginBottom: 20,
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
@@ -220,5 +237,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     elevation: 4,
   },
+
+  touchableButton : {
+    flex: 1,
+    margin: 10,
+    shadowColor: 'rgba(0,0,0, .4)', // IOS
+    shadowOffset: { height: 1, width: 1 }, // IOS
+    shadowOpacity: 1, // IOS
+    shadowRadius: 1, //IOS
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    elevation: 2, // Android
+  //  height: 50,
+  //  width: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+   // flexDirection: 'row',
+  }
 
 });

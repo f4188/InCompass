@@ -4,10 +4,11 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
-  Dimensions
+  Dimensions,
+  FlatList,
+  ImageBackground,
 } from 'react-native';
 import { WebBrowser } from 'expo';
 
@@ -16,6 +17,10 @@ import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { ParallaxImage } from 'react-native-snap-carousel';
 import { MonoText } from '../components/StyledText';
 
+import { createSwitchNavigator, createMaterialTopTabNavigator } from 'react-navigation';
+import { Appbar, Text, Surface } from 'react-native-paper'
+import { List, ListItem } from 'react-native-elements'
+import GridView from 'react-native-super-grid';
 import Edamam from '../lib/edamam.js'
 
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
@@ -40,32 +45,95 @@ const entryBorderRadius = 8;
         subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
         illustration: 'https://i.imgur.com/UYiroysl.jpg'
     },
-    {
-        title: 'Earlier this morning, NYC',
-        subtitle: 'Lorem ipsum dolor sit amet',
-        illustration: 'https://i.imgur.com/UPrs1EWl.jpg'
-    },
-    {
-        title: 'White Pocket Sunset',
-        subtitle: 'Lorem ipsum dolor sit amet et nuncat ',
-        illustration: 'https://i.imgur.com/MABUbpDl.jpg'
-    },
-    {
-        title: 'Acrocorinth, Greece',
-        subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
-        illustration: 'https://i.imgur.com/KZsmUi2l.jpg'
-    },
-    {
-        title: 'The lone tree, majestic landscape of New Zealand',
-        subtitle: 'Lorem ipsum dolor sit amet',
-        illustration: 'https://i.imgur.com/2nCt3Sbl.jpg'
-    },
-    {
-        title: 'Middle Earth, Germany',
-        subtitle: 'Lorem ipsum dolor sit amet',
-        illustration: 'https://i.imgur.com/lceHsT6l.jpg'
-    }
 ];*/
+
+import { BottomNavigation } from 'react-native-paper';
+
+class RecipeGridScreen extends React.Component {
+  render() {
+
+    let { entries } = this.props 
+    entries = entries || []
+    // Taken from https://flatuicolors.com/
+
+    return (
+      <GridView
+        itemDimension={130}
+        items={entries}
+        style={gridStyles.gridView}
+        renderItem={entry => (
+          <ImageBackground source={{ uri: entry.illustration}} style={[gridStyles.itemContainer, { backgroundColor: 'lightgrey' }]} imageStyle={{ borderRadius: 5}} >
+            <Text style={gridStyles.itemName}>{entry.title}</Text>
+            <Text style={gridStyles.itemCode}>{entry.subtitle}</Text>
+          </ImageBackground>
+        )}
+      />
+    );
+  }
+}
+
+const gridStyles = StyleSheet.create({
+  gridView: {
+    paddingTop: 25,
+    flex: 1,
+  },
+  itemContainer: {
+    justifyContent: 'flex-end',
+    borderRadius: 5,
+    padding: 10,
+    height: 150,
+  },
+  itemName: {
+    fontSize: 16,
+    color: '#fff',
+    fontWeight: '600',
+  },
+  itemCode: {
+    fontWeight: '600',
+    fontSize: 12,
+    color: '#fff',
+  },
+});
+
+
+class RecipeListScreen extends React.Component {
+
+  constructor (props) {
+    super(props);
+    this.state = {
+        slider1ActiveSlide: 1,
+        //entries: []
+    };   
+  }
+
+  _renderRow ({ item }) {
+    return (
+      <ListItem
+       titleStyle={{fontWeight: 'bold' }}
+        title={item.title}
+        subtitle={item.subtitle}
+        avatar={{uri:item.illustration}}
+      />
+    )
+  }
+
+  render() {
+
+    let { entries } = this.props
+    entries = entries || []
+
+    return (
+      <View styles={styles.listContainer}>
+        <List>
+          <FlatList 
+            data={entries.map((entry, i) => { return { key: i+'', ...entry } } )} 
+            renderItem={this._renderRow} 
+          />
+        </List>
+      </View>
+    )
+  }
+}
 
 class SliderEntry extends React.Component {
 
@@ -78,22 +146,21 @@ class SliderEntry extends React.Component {
 
     get image () {
         const { data: { illustration }, parallax, parallaxProps, even } = this.props;
-
         return parallax ? (
-            <ParallaxImage
-              source={{ uri: illustration }}
-              containerStyle={[styles.imageContainer, even ? styles.imageContainerEven : {}]}
-              style={styles.image}
-              parallaxFactor={0.35}
-              showSpinner={true}
-              spinnerColor={even ? 'rgba(255, 255, 255, 0.4)' : 'rgba(0, 0, 0, 0.25)'}
-              {...parallaxProps}
-            />
+          <ParallaxImage
+            source={{ uri: illustration }}
+            containerStyle={[styles.imageContainer, even ? styles.imageContainerEven : {}]}
+            style={styles.image}
+            parallaxFactor={0.35}
+            showSpinner={true}
+            spinnerColor={even ? 'rgba(255, 255, 255, 0.4)' : 'rgba(0, 0, 0, 0.25)'}
+            {...parallaxProps}
+          />
         ) : (
-            <Image
-              source={{ uri: illustration }}
-              style={styles.image}
-            />
+          <Image
+            source={{ uri: illustration }}
+            style={styles.image}
+          />
         );
     }
 
@@ -111,72 +178,64 @@ class SliderEntry extends React.Component {
 
         return (
           
-            <TouchableOpacity activeOpacity={1} style={styles.slideInnerContainer} onPress={() => { alert(`You've clicked '${title}'`); }}>
-                <View style={styles.shadow} />
-                <View style={[styles.imageContainer, even ? styles.imageContainerEven : {}]}>
-                    { this.image }
-                    
-                    <View style={[styles.radiusMask, even ? styles.radiusMaskEven : {}]} />
-                </View>
-                <View style={[styles.textContainer, even ? styles.textContainerEven : {}]}>
-                    { uppercaseTitle }
-                    <Text style={[styles.subtitleEntry, even ? styles.subtitleEvenEntry : {}]} numberOfLines={2}>
-                        { subtitle }
-                    </Text>
-                </View>
-            </TouchableOpacity>
+          <TouchableOpacity activeOpacity={1} style={styles.slideInnerContainer} onPress={ () => { alert(`You've clicked '${title}'`); } }>
+              <View style={styles.shadow} />
+              <View style={[styles.imageContainer, even ? styles.imageContainerEven : {}]}>
+                  { this.image }
+                  
+                  <View style={[styles.radiusMask, even ? styles.radiusMaskEven : {}]} />
+              </View>
+              <View style={[styles.textContainer, even ? styles.textContainerEven : {}]}>
+                  { uppercaseTitle }
+                  <Text style={[styles.subtitleEntry, even ? styles.subtitleEvenEntry : {}]} numberOfLines={2}>
+                      { subtitle }
+                  </Text>
+              </View>
+          </TouchableOpacity>
 
         );
     }
 }
 
-export default class SuggestScreen extends React.Component {
+
+class SuggestScreen1 extends React.Component {
 
   constructor (props) {
-        super(props);
-
-        this.state = {
-            slider1ActiveSlide: 1,
-            entries: []
-        };
-
-        
-    }
-
-    
-  _renderItem ({item, index}) {
-    return (<SliderEntry data={item} even={(index + 1) % 2 === 0} />)
+    super(props);
+    this.state = {
+      slider1ActiveSlide: 1,
+      entries: [],
+    };   
   }
 
   async componentDidMount() {
 
     const { navigation } = this.props;
     const edamamParams = navigation.getParam('edamamParams', { ingredients: 'chicken'});
-
     this.edamam = new Edamam(edamamParams)
-
     await this._displayRecipes(0, 10)
 
   }
 
-  //getSnapshotBeforeUpdate(prevProps, prevState) {
-  
-  //}
-
   async _displayRecipes(from, to) {
+
     let recipes = await this.edamam.recipes(from, to)
     this.setState({ entries: recipes })
+
+  }
+    
+  _renderItem ({item, index}) {
+    return (<SliderEntry data={item} even={(index + 1) % 2 === 0} />)
   }
 
   render() {
 
-    let { entries } = this.state
+    let { entries } = this.props
+    entries = entries || []
+
     return (
       <View style={styles.container}>
-      
         <View style={styles.exampleContainer}>
-          <Text style={styles.title}>{`Example 1`}</Text>
-          <Text style={styles.subtitle}> some subtitle </Text>
           <Carousel
             data={entries}
             renderItem={this._renderItem}
@@ -194,18 +253,42 @@ export default class SuggestScreen extends React.Component {
                 tension: 40
             }}
           />
+        </View>
       </View>
-    </View>
-    );
+    )
   }
 
 }
 
-const styles = StyleSheet.create({
+export default createMaterialTopTabNavigator({
 
+  'Recipe Carousel': { screen: SuggestScreen1 },
+  RecipeGrid: { screen: RecipeGridScreen },
+  RecipeList: { screen: RecipeListScreen },
+
+}, {
+
+  lazy: true,
+  swipeEnabled: true,
+  
+});
+
+const styles = StyleSheet.create({
   container: {
       flex: 1,
-      backgroundColor: '#fff'
+      flexDirection: 'column',
+      backgroundColor: '#fff',
+  },
+  listContainer: { 
+    flex: 1, 
+    backgroundColor: 'white',
+  },
+  content: {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: 'white',
+  },
+  item: {
   },
   /*
   gradient: {
@@ -222,7 +305,8 @@ const styles = StyleSheet.create({
       flex: 1
   },
   exampleContainer: {
-      paddingVertical: 30
+      paddingVertical: 10,
+     // backgroundColor: 'black',
   },
 
   exampleContainerLight: {
@@ -231,7 +315,7 @@ const styles = StyleSheet.create({
   title: {
       paddingHorizontal: 30,
       backgroundColor: 'transparent',
-      color: 'rgba(255, 255, 255, 0.9)',
+      color: 'rgba(255, 0, 255, 0.9)',
       fontSize: 20,
       fontWeight: 'bold',
       textAlign: 'center'
@@ -241,7 +325,7 @@ const styles = StyleSheet.create({
       marginTop: 5,
       paddingHorizontal: 30,
       backgroundColor: 'transparent',
-      color: 'rgba(255, 255, 255, 0.75)',
+      color: 'rgba(255, 255, 0, 0.75)',
       fontSize: 13,
       fontStyle: 'italic',
       textAlign: 'center'
@@ -263,73 +347,73 @@ const styles = StyleSheet.create({
       marginHorizontal: 8
   },
   shadow: {
-        position: 'absolute',
-        top: 0,
-        left: itemHorizontalMargin,
-        right: itemHorizontalMargin,
-        bottom: 18,
-        shadowColor: '#000',
-        shadowOpacity: 0.25,
-        shadowOffset: { width: 0, height: 10 },
-        shadowRadius: 10,
-        borderRadius: entryBorderRadius
-    },
-     image: {
-        ...StyleSheet.absoluteFillObject,
-        resizeMode: 'cover',
-        borderRadius: 0,
-        borderTopLeftRadius: entryBorderRadius,
-        borderTopRightRadius: entryBorderRadius
-    },
-    imageContainer: {
-        flex: 1,
-        marginBottom:  -1, // Prevent a random Android rendering issue
-        backgroundColor: 'white',
-        borderTopLeftRadius: entryBorderRadius,
-        borderTopRightRadius: entryBorderRadius
-    },
-    imageContainerEven: {
-        backgroundColor: '#fff'
-    },
-     // image's border radius is buggy on iOS; let's hack it!
-    radiusMask: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        height: entryBorderRadius,
-        backgroundColor: 'white',
+      position: 'absolute',
+      top: 0,
+      left: itemHorizontalMargin,
+      right: itemHorizontalMargin,
+      bottom: 18,
+      shadowColor: '#000',
+      shadowOpacity: 0.25,
+      shadowOffset: { width: 0, height: 10 },
+      shadowRadius: 10,
+      borderRadius: entryBorderRadius
+  },
+   image: {
+      ...StyleSheet.absoluteFillObject,
+      resizeMode: 'cover',
+      borderRadius: 0,
+      borderTopLeftRadius: entryBorderRadius,
+      borderTopRightRadius: entryBorderRadius
+  },
+  imageContainer: {
+      flex: 1,
+      marginBottom:  -1, // Prevent a random Android rendering issue
+      backgroundColor: '#000',
+      borderTopLeftRadius: entryBorderRadius,
+      borderTopRightRadius: entryBorderRadius
+  },
+  imageContainerEven: {
+      backgroundColor: '#000'
+  },
+   // image's border radius is buggy on iOS; let's hack it!
+  radiusMask: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      height: entryBorderRadius,
+      backgroundColor: 'white',
 
-    },
-    titleEntry: {
-        color: '#000',
-        fontSize: 13,
-        fontWeight: 'bold',
-        letterSpacing: 0.5
-    },
-    titleEvenEntry: {
-        color: 'black'
-    },
-    subtitleEntry: {
-        marginTop: 6,
-        color: '#aaf',
-        fontSize: 12,
-        fontStyle: 'italic'
-    },
-    subtitleEvenEntry: {
-        color: 'rgba(255, 255, 255, 0.7)'
-},
+  },
+  titleEntry: {
+      color: '#fff',
+      fontSize: 13,
+      fontWeight: 'bold',
+      letterSpacing: 0.5
+  },
+  titleEvenEntry: {
+      color: '#fff'
+  },
+  subtitleEntry: {
+      marginTop: 6,
+      color: '#aaf',
+      fontSize: 12,
+      fontStyle: 'italic'
+  },
+  subtitleEvenEntry: {
+      color: 'rgba(255, 255, 255, 0.7)'
+  },
   textContainer: {
         justifyContent: 'center',
         paddingTop: 20 - entryBorderRadius,
         paddingBottom: 20,
         paddingHorizontal: 16,
-        backgroundColor: 'white',
+        backgroundColor: '#000',
         borderBottomLeftRadius: entryBorderRadius,
         borderBottomRightRadius: entryBorderRadius
     },
     textContainerEven: {
-        backgroundColor: '#fff'
+        backgroundColor: '#000'
 },
 
 

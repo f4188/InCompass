@@ -12,7 +12,6 @@ import {
   Slider,
   Button,
   Alert
-
 } from 'react-native';
 
 //import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
@@ -21,6 +20,8 @@ import { WebBrowser } from 'expo';
 import Slider2 from 'react-native-slider';
 import { MonoText } from '../components/StyledText';
 import { TagSelect } from 'react-native-tag-select';
+
+import { Divider, Appbar } from 'react-native-paper'
 
 const Touchable = Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity
 
@@ -40,9 +41,6 @@ const defaultColors = {
 }
 
 export default class ReportScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Nutrition',
-  };
 
   constructor(props) {
     super(props)
@@ -135,6 +133,7 @@ export default class ReportScreen extends React.Component {
           Carbs: {this.state.carbs}
         </Text>
         
+        <Divider />
 
         <Text style={styles.labelText}>Diet</Text>
         <TagSelect
@@ -159,6 +158,9 @@ export default class ReportScreen extends React.Component {
             />
           </View>
         </View>
+
+        <Divider />
+
 
         <Text style={styles.labelText}>Health Labels</Text>
         <TagSelect
@@ -185,6 +187,7 @@ export default class ReportScreen extends React.Component {
         </View>
 
         
+        <Divider />
 
         <View style={styles.footer}>
         <Touchable accessibilityComponentType="button" onPress={()=>{}}>
@@ -223,9 +226,13 @@ const styles = StyleSheet.create({
 
   }, 
   content: {
+    //marginVertical: 10,
+    backgroundColor: 'white',
     flex: 1,
-    marginLeft: 10,
-    marginRight: 10,
+    //marginLeft: 10,
+    //marginRight: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
  //   alignItems: "stretch",
    // justifyContent: "center"
   },

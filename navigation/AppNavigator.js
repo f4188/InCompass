@@ -1,75 +1,175 @@
 import React from 'react';
-import { createSwitchNavigator, createStackNavigator, createDrawerNavigator } from 'react-navigation';
-
-//import MainTabNavigator from './MainTabNavigator';
+import { Platform, AsyncStorage } from 'react-native';
+import {
+  createTabNavigator,
+  createBottomTabNavigator,
+  createStackNavigator,
+  createDrawerNavigator,
+} from 'react-navigation';
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
 
 import MainScreen from '../screens/MainScreen'
-//import BioScreen from '../screens/BioScreen'
-//import GoalsScreen from '../screens/GoalsScreen'
 import UploadScreen from '../screens/UploadScreen'
 import Pref1Screen from '../screens/Pref1Screen'
 import Pref2Screen from '../screens/Pref2Screen'
 import ReportScreen from '../screens/ReportScreen'
 import SuggestScreen from '../screens/SuggestScreen'
+import WelcomeScreen from '../screens/Welcome'
 
-import { Appbar } from 'react-native-paper';
+//import DrawerItems from './DrawerItems';
 
+import { HamburgerIcon, SettingsIcon, BackIcon } from '../components/icons';
+import CustomDrawerContent from '../components';
+import { colors } from '../utils/constants';
 
-//import { KeepAwake, Util } from 'expo';
-//import * as React from 'react';
-import { StatusBar, I18nManager, AsyncStorage, Platform } from 'react-native';
-import {
-  Provider as PaperProvider,
-  DarkTheme,
-  DefaultTheme,
-} from 'react-native-paper';
-import createReactContext from 'create-react-context';
+/*
 
-const PreferencesContext: any = createReactContext();
-//import {  } from 'react-navigation';
-//import RootNavigator from './src/RootNavigator';
-import DrawerItems from './DrawerItems';
-//import type { Theme } from 'react-native-paper/types';
-
- 
-
-//export default createSwitchNavigator({
-  // You could add another route here for authentication.
-  // Read more at https://reactnavigation.org/docs/en/auth-flow.html
-  //Main: MainTabNavigator,
-//});
-
-const RootNavigator = createStackNavigator({
-
-	MainScreen : { screen : MainScreen },
+	SuggestScreen : { screen : SuggestScreen },
 	Pref1Screen : { screen : Pref1Screen },
 	Pref2Screen : { screen : Pref2Screen },
 
 	ReportScreen : { screen : ReportScreen },
 	UploadScreen : { screen : UploadScreen },
-	SuggestScreen : { screen : SuggestScreen },
-	
-}, {
-	navigationOptions: ({ navigation }) => ({
-      header: (
-        <Appbar.Header>
-          <Appbar.Action icon="menu" onPress={() => navigation.openDrawer()} />
-          <Appbar.Content title="Examples" />
-        </Appbar.Header>
+
+	TabNavigator -|- AppDrawer -|- AppMainStack -|- Home: 	 AppMainTab
+				 				         	     |- Settings: Settings
+
+*/
+
+const AppMainTab = createBottomTabNavigator({
+  Home: {
+    screen: SuggestScreen,
+    navigationOptions: ({ navigation }) => ({
+      drawerLabel: 'Search Results',
+      drawerIcon: ({ tintColor }) => (
+        <FontAwesome name="home" size={23} color={tintColor} />
       ),
-    }),
- })
+      tabBarLabel: 'Search',
+      tabBarIcon: ({ tintColor }) => (
+        <FontAwesome name="home" size={23} color={tintColor} />
+      ),
+      headerStyle: {
+        backgroundColor: colors.PINK_100,
+      },
+      headerTitle: 'Pick a Companion',
+      headerTitleStyle: {
+        color: colors.PINK_300,
+      },
+      headerLeft: <HamburgerIcon onPress={() => navigation.navigate('DrawerOpen')} />,
+    })
+  },
+  Favorites: {
+    screen: Pref1Screen,
+    navigationOptions: ({ navigation }) => ({
+      drawerLabel: 'Include',
+      drawerIcon: ({ tintColor }) => (
+        <FontAwesome name="heartbeat" size={23} color={tintColor} />
+      ),
+      tabBarLabel: 'Include',
+      tabBarIcon: ({ tintColor }) => (
+        <FontAwesome name="heartbeat" size={23} color={tintColor} />
+      ),
+      headerStyle: {
+        backgroundColor: colors.PINK_100,
+      },
+      headerTitle: 'Favorites',
+      headerTitleStyle: {
+        color: colors.WHITE,
+      },
+      headerLeft: <HamburgerIcon onPress={() => navigation.navigate('DrawerOpen')} />,
+    })
+  },
+  Profile: {
+    screen: Pref2Screen,
+    navigationOptions: ({ navigation }) => ({
+      drawerLabel: 'Exclude',
+      drawerIcon: ({ tintColor }) => (
+        <FontAwesome name="user-circle" size={23} color={tintColor} />
+      ),
+      tabBarLabel: 'Exclude',
+      tabBarIcon: ({ tintColor }) => (
+        <FontAwesome name="user-circle" size={23} color={tintColor} />
+      ),
+      headerStyle: {
+        backgroundColor: colors.PINK_100,
+      },
+      headerTitle: 'Profile',
+      headerTitleStyle: {
+        color: colors.WHITE,
+      },
+      headerLeft: <HamburgerIcon onPress={() => navigation.navigate('DrawerOpen')} />,
+      headerRight: <SettingsIcon onPress={() => navigation.navigate('Settings')} />,
+    })
+  },
+}, {
+  tabBarOptions: {
+    activeTintColor: colors.WHITE,
+    inactiveTintColor: colors.PINK_50,
+    inactiveBackgroundColor: colors.PINK_100,
+    activeBackgroundColor: colors.PINK_100,
+    showIcon: true,
+    showLabel: Platform.OS === 'ios',
+    indicatorStyle: {
+    backgroundColor: colors.PINK_300,
+    },
+    style: {
+   		backgroundColor: colors.PINK_100,
+    },
+    upperCaseLabel: false,
+  },
+  tabBarPosition: 'bottom',
+  swipeEnabled: true,
+  animationEnabled: false,
+});
 
- const DrawerApp = createDrawerNavigator(
-  { Home: { screen: RootNavigator } },
-  {
-    contentComponent: () => (
-          <DrawerItems/>
-    ),
-    // set drawerPosition to support rtl toggle on android
-    drawerPosition:
-      Platform.OS === 'android' && (I18nManager.isRTL ? 'right' : 'left'),
-  }
-);
+const AppMainStack = createStackNavigator({
+  Home: { screen: AppMainTab },
+  Settings: { screen: ReportScreen },
+}, {
+  cardStyle: {
+    backgroundColor: colors.PINK_50,
+  },
+  mode: 'modal',
+});
 
- export default DrawerApp
+const AppDrawer = createDrawerNavigator({
+  Home: {
+    screen: AppMainStack,
+  },
+  Settings: {
+    screen: ReportScreen,
+    navigationOptions: ({ navigation }) => ({
+      drawerLabel: 'Settings',
+      drawerIcon: ({ tintColor }) => (
+        <Ionicons name="md-settings" size={23} color={tintColor} />
+      ),
+      headerStyle: {
+        backgroundColor: colors.PINK_100,
+      },
+      headerTitle: 'Settings',
+      headerTitleStyle: {
+        color: colors.WHITE,
+      },
+      headerLeft: <BackIcon onPress={() => navigation.goBack()} />,
+		}),
+  },
+}, {
+  contentComponent: props => (<CustomDrawerContent {...props}/>),
+  contentOptions: {
+    activeBackgroundColor: colors.PINK_100,
+    activeTintColor: colors.WHITE,
+	inactiveTintColor: colors.PINK_200,
+  },
+});
+
+const AppNavigator = createTabNavigator({
+  Welcome: { screen: WelcomeScreen },
+  Main: { screen: AppDrawer },
+}, {
+  navigationOptions: {
+    tabBarVisible: false,
+  },
+  swipeEnabled: false,
+});
+
+export default AppNavigator;
